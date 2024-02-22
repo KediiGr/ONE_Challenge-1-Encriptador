@@ -5,37 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/normalize.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <title>Encriptador de Texto - Challente ONE</title>
+    <title>Encriptador de Texto - Challenge ONE</title>
   </head>
   <body>
     <header>
       <div class="header_tit">
-        <img class="header_logo" src="imgs/Logo@2x.png" alt="" />
-        <h1>Bienvenido al Encriptador</h1>
+        <img class="logo" src="imgs/Logo@2x.png" alt="Logo Alura" />
+        <h1 class="titulo">Bienvenido al Encriptador</h1>
       </div>
     </header>
 
     <main>
       <section class="main_input">
         <div class="main_texto">
-          <textarea name="" id="" cols="100" rows="20"> </textarea>
+          <h4 class="tit_textarea">Ingrese el texto que desee encriptar o desencriptar</h4>
+          <textarea name="" id="textarea" placeholder="Ingrese el texto aquí..."> </textarea>
+          <p></p>
         </div>
-        <div class="main_btn">
-          <input class="btn btn_enc" type="submit" value="Encriptar" />
-          <input class="btn btn_desc" type="submit" value="Desencriptar" />
+        <div class="div_btn">
+          <button class="btn btn_enc" onclick="capturaTexto()">Encriptar</button>
+          <button class="btn btn_desc">Desencriptar</button>
         </div>
       </section>
 
       <section class="main_resultado">
         <div class="">
-          <h2 class="resultado_tit">Texto Encriptado</h2>
-          <img src="imgs/Muñeco.png" alt="" />
+          <h2 class="resultado_tit">Resultado</h2>
+          <img class="resultado_img" src="imgs/Michi-detective.png" alt="Michi Detective" />
           <p class="resultado_texto">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit,
             repudiandae et quia exercitationem cum delectus dolor eius dicta
             optio ipsum, molestiae ea fuga officiis accusamus neque sint
             deleniti illo amet.
+            orem ipsum dolor sit amet consectetur adipisicing elit. Suscipit,
+            repudiandae et quia exercitationem cum delectus dolor eius dicta
+            optio ipsum, molestiae ea fuga officiis accusamus neque sint
+            deleniti illo amet.xercitationem cum delectus dolor eius dicta
+            optio ipsum, molestiae ea fuga officiis accusamus neque sint
+            deleniti illo amet.xercitationem cum delectus dolor eius dicta
+            optio ipsum, molestiae ea fuga officiis accusamus neque sint
+            deleniti illo amet.
           </p>
+          <div class="div_btn">
+            <button class="btn btn_copy">Copiar</button>
+          </div>
         </div>
       </section>
     </main>
@@ -50,5 +63,7 @@
         </p>
       </div>
     </footer>
+
+    <script src="js/script.js"></script>
   </body>
 </html>
