@@ -128,3 +128,38 @@ textarea {
   border-width: 2px;
   border-radius: 6px;
 }
+
+.notification {
+  display: none;
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 20px;
+  z-index: 1000;
+}
+
+.notification.show {
+  display: block;
+  animation: fadeinout 2s;
+}
+
+@keyframes fadeinout {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+.footer_cr{
+  text-align: center;
+  font-size:20px;
+  font-style: italic;
+}
+
+.footer_cr span{
+  font-size: 25px;
+  font-weight: bold;
+}

@@ -1,41 +1,10 @@
-/* let textoCapt = null;
-
-function capturaTexto() {
-  let textArea = document.getElementById("textarea");
-  textoCapt = textArea.value;
-  //return;
-} */
-
-/* // Declarar una variable global para almacenar el texto
 let textoCapturado = "";
 
 // Función para capturar el contenido del textarea
 function capturarTexto() {
-    const textarea = document.querySelector("textarea"); // Cambia ".textarea" por el selector correcto de tu textarea
+    const textarea = document.querySelector("textarea");
     textoCapturado = textarea.value;
-}
-
-// Evento al presionar el botón "Encriptar"
-document.querySelector(".btn_enc").addEventListener("click", function() {
-    capturarTexto();
-    // Aquí puedes agregar la lógica para encriptar el texto
-    console.log("Texto encriptado:", textoCapturado);
-});
-
-// Evento al presionar el botón "Desencriptar"
-document.querySelector(".btn_desc").addEventListener("click", function() {
-    capturarTexto();
-    // Aquí puedes agregar la lógica para desencriptar el texto
-    console.log("Texto desencriptado:", textoCapturado);
-});
- */
-// Declarar una variable global para almacenar el texto
-let textoCapturado = "";
-
-// Función para capturar el contenido del textarea
-function capturarTexto() {
-    const textarea = document.querySelector("textarea"); // Cambia ".textarea" por el selector correcto de tu textarea
-    textoCapturado = textarea.value;
+    return textoCapturado;
 }
 
 // Función para encriptar el texto
@@ -60,7 +29,7 @@ function encriptarTexto(texto) {
 }
 
 // Función para desencriptar el texto
-function desencriptarTexto(textoEncriptado) {
+function desencriptarTexto(texto) {
     const reverseMapping = {
         'enter': 'e',
         'imes': 'i',
@@ -69,29 +38,93 @@ function desencriptarTexto(textoEncriptado) {
         'ufat': 'u'
     };
 
-    let palabras = textoEncriptado.split(/(\s+)/); // Divide por espacios y conserva los espacios
-    let textoDesencriptado = "";
-    for (let i = 0; i < palabras.length; i += 2) {
-        const palabra = palabras[i];
-        if (palabra in reverseMapping) {
-            textoDesencriptado += reverseMapping[palabra];
-        } else {
-            textoDesencriptado += palabra;
-        }
+    let textoDesencriptado = texto;
+    for (const [key, value] of Object.entries(reverseMapping)) {
+        const regex = new RegExp(key, "g");
+        textoDesencriptado = textoDesencriptado.replace(regex, value);
     }
     return textoDesencriptado;
 }
 
-// Evento al presionar el botón "Encriptar"
+function mostrarResultado(resultado) {
+    const resultadoTextarea = document.querySelector(".resultado_texto");
+    if (resultadoTextarea) {
+        resultadoTextarea.value = resultado;
+    }
+}
+
+// Presionar botón "Encriptar"
 document.querySelector(".btn_enc").addEventListener("click", function() {
-    capturarTexto();
-    const textoEncriptado = encriptarTexto(textoCapturado);
-    console.log("Texto encriptado:", textoEncriptado);
+    const resultadoTextarea = document.getElementById("textarea");
+    const texto = resultadoTextarea.value.trim();
+
+    if (texto === "") {
+        mostrarNotificacion("¡Ingrese el texto que desea procesar!","#640303");
+        return;
+    }
+
+    const textoEncriptado = encriptarTexto(texto);
+    mostrarResultado(textoEncriptado);
 });
 
-// Evento al presionar el botón "Desencriptar"
+// Presionar botón "Desencriptar"
 document.querySelector(".btn_desc").addEventListener("click", function() {
-    capturarTexto();
-    const textoDesencriptado = desencriptarTexto(textoCapturado);
-    console.log("Texto desencriptado:", textoDesencriptado);
+    const resultadoTextarea = document.getElementById("textarea");
+    const texto = resultadoTextarea.value.trim();
+
+    if (texto === "") {
+        mostrarNotificacion("¡Ingrese el texto que desea procesar!","#640303");
+        return;
+    }
+
+    const textoDesencriptado = desencriptarTexto(texto);
+    mostrarResultado(textoDesencriptado);
 });
+
+// Presionar botón "Copiar"
+document.querySelector(".btn_copy").addEventListener("click", function() {
+    const resultadoTextarea = document.querySelector(".resultado_texto");
+    if (resultadoTextarea.value.trim() !== "") {
+        resultadoTextarea.select();
+        document.execCommand('copy');
+        mostrarNotificacion("¡Texto Copiado!", "#4caf50");
+    } else {
+        mostrarNotificacion("¡Nada que copiar!", "#640303");
+    }
+});
+
+// mostrar notificación verde
+function mostrarNotificacion(mensaje, color) {
+    const notification = document.getElementById("Notification");
+    notification.textContent = mensaje;
+    notification.style.backgroundColor = color; 
+    if (!notification.classList.contains("show")) {
+        notification.classList.add("show");
+        setTimeout(() => {
+            notification.classList.remove("show");
+        }, 1500); // milisegundos para que se oculte la notificación
+    }
+}
+
+// Restricciones del textarea principal
+const textareaPrincipal = document.getElementById("textarea");
+const textareaSecundario = document.querySelector(".resultado_texto");
+
+textareaPrincipal.addEventListener("input", function() {
+    const texto = textareaPrincipal.value;
+    const textoFiltrado = texto.replace(/[^a-z\s]/g, "");
+
+    if (texto !== textoFiltrado) {
+        textareaPrincipal.value = textoFiltrado;
+    }
+
+    if (texto.trim() === "") {
+        limpiarTextareaSecundario();
+    }
+});
+
+function limpiarTextareaSecundario() {
+    textareaSecundario.value = "";
+}
+
+
