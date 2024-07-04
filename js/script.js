@@ -60,11 +60,11 @@ document.querySelector(".btn_enc").addEventListener("click", function() {
 
     if (texto === "") {
         mostrarNotificacion("¡Ingrese el texto que desea procesar!","#640303");
-        return;
+    } else {
+        const textoEncriptado = encriptarTexto(texto);
+        mostrarResultado(textoEncriptado);
+        mostrarNotificacion("¡Texto Encriptado!", "#4caf50");
     }
-
-    const textoEncriptado = encriptarTexto(texto);
-    mostrarResultado(textoEncriptado);
 });
 
 // Presionar botón "Desencriptar"
@@ -74,11 +74,11 @@ document.querySelector(".btn_desc").addEventListener("click", function() {
 
     if (texto === "") {
         mostrarNotificacion("¡Ingrese el texto que desea procesar!","#640303");
-        return;
+    } else{
+        const textoDesencriptado = desencriptarTexto(texto);
+        mostrarResultado(textoDesencriptado);
+        mostrarNotificacion("¡Texto Desencriptado!", "#4caf50");
     }
-
-    const textoDesencriptado = desencriptarTexto(texto);
-    mostrarResultado(textoDesencriptado);
 });
 
 // Presionar botón "Copiar"
@@ -93,7 +93,7 @@ document.querySelector(".btn_copy").addEventListener("click", function() {
     }
 });
 
-// mostrar notificación verde
+// mostrar notificación
 function mostrarNotificacion(mensaje, color) {
     const notification = document.getElementById("Notification");
     notification.textContent = mensaje;
@@ -102,13 +102,13 @@ function mostrarNotificacion(mensaje, color) {
         notification.classList.add("show");
         setTimeout(() => {
             notification.classList.remove("show");
-        }, 1500); // milisegundos para que se oculte la notificación
+        }, 2500); // milisegundos para que se oculte la notificación
     }
 }
 
 // Restricciones del textarea principal
 const textareaPrincipal = document.getElementById("textarea");
-const textareaSecundario = document.querySelector(".resultado_texto");
+const textareaResultado = document.querySelector(".resultado_texto");
 
 textareaPrincipal.addEventListener("input", function() {
     const texto = textareaPrincipal.value;
@@ -119,12 +119,7 @@ textareaPrincipal.addEventListener("input", function() {
     }
 
     if (texto.trim() === "") {
-        limpiarTextareaSecundario();
+        textareaResultado.value = "";
     }
 });
-
-function limpiarTextareaSecundario() {
-    textareaSecundario.value = "";
-}
-
 
